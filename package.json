@@ -1,0 +1,69 @@
+{
+  "name": "electron-react-typescript",
+  "author": {
+    "name": "Brendon Cambuí",
+    "email": "brendon@cambui.dev",
+    "url": "https://cambui.dev/"
+  },
+  "version": "0.1.0",
+  "private": true,
+  "eslintConfig": {
+    "extends": "react-app"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
+  "main": "build/electron/main-process/main.js",
+  "homepage": "./",
+  "build": {
+    "extends": null,
+    "appId": "dev.cambui",
+    "productName": "Electron React Typescript App",
+    "copyright": "Copyright © 2019-2020 ${author}",
+    "files": [
+      "build/**/*"
+    ]
+  },
+  "scripts": {
+    "dev": "concurrently \"yarn react-dev\" \"wait-on http://localhost:3000 && yarn electron-dev\" -k",
+    "build": "yarn electron-pack --dir -c.compression=store -c.mac.identity=null",
+    "react-dev": "cross-env BROWSER=none react-scripts start",
+    "react-build": "react-scripts build",
+    "react-eject": "react-scripts eject",
+    "electron-dev": "rimraf build/electron/* && yarn electron-compile && electron .",
+    "electron-compile": "tsc src/main-process/main.ts --outDir build/electron/ --esModuleInterop",
+    "electron-pack": "yarn react-build && yarn electron-compile && electron-builder"
+  },
+  "dependencies": {
+    "electron-is-dev": "^1.1.0",
+    "react": "^16.10.2",
+    "react-dom": "^16.10.2"
+  },
+  "devDependencies": {
+    "@types/jest": "24.0.18",
+    "@types/node": "12.7.12",
+    "@types/react": "16.9.5",
+    "@types/react-dom": "16.9.1",
+    "concurrently": "^5.0.0",
+    "cross-env": "^6.0.3",
+    "electron": "^6.0.12",
+    "electron-builder": "^21.2.0",
+    "node-sass": "^4.12.0",
+    "react-scripts": "3.2.0",
+    "rimraf": "^3.0.0",
+    "typescript": "3.6.4",
+    "wait-on": "^3.3.0"
+  },
+  "resolutions": {
+    "@types/react": "16.9.5"
+  }
+}
