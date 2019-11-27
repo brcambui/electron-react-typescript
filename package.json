@@ -36,9 +36,9 @@
   "scripts": {
     "dev": "concurrently \"yarn react-dev\" \"wait-on http://localhost:3000 && yarn electron-dev\" -k",
     "build": "yarn electron-pack --dir -c.compression=store -c.mac.identity=null",
-    "react-dev": "cross-env BROWSER=none react-scripts start",
-    "react-build": "react-scripts build",
-    "react-eject": "react-scripts eject",
+    "react-dev": "cross-env BROWSER=none rescripts start",
+    "react-build": "rescripts build",
+    "react-eject": "rescripts eject",
     "electron-dev": "rimraf build/electron/* && yarn electron-compile && electron .",
     "electron-compile": "tsc src/main-process/main.ts --outDir build/electron/ --esModuleInterop",
     "electron-pack": "yarn react-build && yarn electron-compile && electron-builder"
@@ -49,6 +49,8 @@
     "react-dom": "^16.10.2"
   },
   "devDependencies": {
+    "@rescripts/cli": "^0.0.13",
+    "@rescripts/rescript-env": "^0.0.11",
     "@types/jest": "24.0.18",
     "@types/node": "12.7.12",
     "@types/react": "16.9.5",
