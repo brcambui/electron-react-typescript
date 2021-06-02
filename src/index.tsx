@@ -1,4 +1,4 @@
-import React, { ReactElement } from 'react';
+import React from 'react';
 import ReactDOM from 'react-dom';
 
 import './index.scss';
@@ -13,7 +13,7 @@ import Splash from './ui/splash';
 const whichView = new URLSearchParams(window.location.search).get('view');
 
 /** Component to be rendered into the root node. */
-let component: ReactElement = (<></>);
+let component: React.ReactElement = (<></>);
 
 switch (whichView) {
 
