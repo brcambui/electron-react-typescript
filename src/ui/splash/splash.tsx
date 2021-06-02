@@ -1,10 +1,9 @@
 import React, { useState, useEffect } from 'react';
+import { ipcRenderer } from 'electron';
 
 import './splash.scss';
 import logo from '../../assets/logo.svg';
 import AppInfo from '../../models/app-info';
-
-const { ipcRenderer } = window.require('electron');
 
 const Splash: React.FC = () => {
 
