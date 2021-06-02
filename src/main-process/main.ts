@@ -22,6 +22,7 @@ const windowPreferences: BrowserWindowConstructorOptions = {
   width: 960,
   height: 600,
   webPreferences: {
+    contextIsolation: false,
     webSecurity: false,
     nodeIntegration: true
   }
