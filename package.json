@@ -1,20 +1,30 @@
 {
+  "version": "0.2.1",
+  "license": "MIT",
   "name": "electron-react-typescript",
+  "productName": "Electron React Typescript",
   "author": {
     "name": "Brendon Cambuí",
     "email": "brendon@cambui.dev",
     "url": "https://cambui.dev/"
   },
-  "version": "0.2.1",
-  "license": "MIT",
+  "main": "build/electron/main-process/main.js",
+  "homepage": "./",
   "scripts": {
-    "dev": "rescripts start",
-    "build": "rescripts build"
+    "dev": "concurrently \"yarn react:dev\" \"wait-on http://localhost:3000 && yarn electron:dev\" -k",
+    "build": "yarn electron:package --dir -c.compression=store -c.mac.identity=null",
+    "deploy": "yarn electron:publish",
+    "package": "yarn electron:package",
+    "react:dev": "cross-env BROWSER=none PORT=3000 rescripts start",
+    "react:build": "rescripts build",
+    "electron:dev": "rimraf build/electron/* && yarn electron:watch",
+    "electron:watch": "tsc-watch src/main-process/main.ts --outDir build/electron/ --esModuleInterop --onSuccess \"electron .\"",
+    "electron:compile": "tsc src/main-process/main.ts --outDir build/electron/ --esModuleInterop",
+    "electron:package": "yarn react:build && yarn electron:compile && electron-builder -p never",
+    "electron:publish": "yarn react:build && yarn electron:compile && electron-builder -p always"
   },
   "eslintConfig": {
-    "extends": [
-      "react-app"
-    ]
+    "extends": "react-app"
   },
   "browserslist": {
     "production": [
@@ -28,25 +38,50 @@
       "last 1 safari version"
     ]
   },
+  "build": {
+    "extends": null,
+    "appId": "dev.cambui.electron-react-typescript",
+    "productName": "Electron React Typescript",
+    "copyright": "Copyright © 2019-2021 ${author}",
+    "files": [
+      "build/**/*"
+    ],
+    "extraResources": [
+      {
+        "from": "bin",
+        "to": "bin"
+      },
+      {
+        "from": "public/icon.png",
+        "to": "icon.png"
+      }
+    ]
+  },
   "dependencies": {
+    "electron-is-dev": "^2.0.0",
     "electron-updater": "^4.3.9",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "sass": "^1.32.12"
   },
   "devDependencies": {
-    "@rescripts/cli": "^0.0.16",
-    "@rescripts/rescript-env": "^0.0.14",
+    "@rescripts/cli": "0.0.15",
+    "@rescripts/rescript-env": "0.0.12",
     "@types/node": "^14.14.20",
-    "@types/react": "^17.0.0",
-    "@types/react-dom": "^17.0.0",
+    "@types/react": "17.0.0",
+    "@types/react-dom": "17.0.0",
+    "concurrently": "^6.2.0",
+    "cross-env": "^7.0.3",
     "electron": "^13.0.1",
     "electron-builder": "^22.10.5",
     "react-scripts": "^4.0.3",
-    "typescript": "^4.0.3"
+    "rimraf": "^3.0.2",
+    "tsc-watch": "^4.4.0",
+    "typescript": "^4.1.3",
+    "wait-on": "^5.3.0"
   },
   "resolutions": {
-    "@rescripts/rescript-use-eslint-config": "0.0.11",
-    "@rescripts/rescript-use-tslint-config": "0.0.7"
+    "@types/react": "17.0.0",
+    "@types/react-dom": "17.0.0"
   }
 }
