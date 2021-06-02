@@ -1,6 +1,5 @@
 import React, { ReactElement } from 'react';
 import ReactDOM from 'react-dom';
-import * as serviceWorker from './serviceWorker';
 
 import './index.scss';
 import App from './ui/app';
@@ -11,7 +10,7 @@ import Splash from './ui/splash';
  * This value is obtained by the query parameter "view".
  * @example http://localhost:3000/?view=splash
  */
-const whichView: string | null = new URLSearchParams(window.location.search).get('view');
+const whichView = new URLSearchParams(window.location.search).get('view');
 
 /** Component to be rendered into the root node. */
 let component: ReactElement = (<></>);
