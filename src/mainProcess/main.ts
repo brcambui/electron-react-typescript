@@ -1,68 +1,57 @@
-import { app, BrowserWindow, BrowserWindowConstructorOptions, ipcMain } from 'electron'
-import path from 'path'
-import url from 'url'
-import isDev from 'electron-is-dev'
+import { app, BrowserWindow, ipcMain as ipc } from 'electron'
 
-import { checkForUpdates } from './appUpdate'
+import { checkForUpdates } from './checkForUpdates'
+import { createLogger, stopLogger } from '../lib/logger'
+import { appUrl } from '../lib/paths'
 
-let mainWindow: BrowserWindow | null = null
+const logger = createLogger(`main`)
 
-let starting: boolean = true
-
-const appURL: string = isDev
-  ? `http://localhost:3000/`
-  : url.format({
-    pathname: path.join(__dirname, `../../index.html`),
-    protocol: `file:`,
-    slashes: true
-  })
-
-const windowPreferences: BrowserWindowConstructorOptions = {
-  width: 960,
-  height: 600,
-  webPreferences: {
-    contextIsolation: false,
-    webSecurity: false,
-    nodeIntegration: true
-  }
-}
-
-function onWindowAllClosed() {
-  mainWindow = null
-  if (!starting) app.quit()
-}
-
-async function onReady() {
-  await splashScreen()
-  await createWindow()
-}
-
-async function splashScreen() {
-  mainWindow = new BrowserWindow({
-    ...windowPreferences,
-    width: 480,
-    height: 308,
-    frame: false,
-    closable: false,
-    resizable: false
-  })
-  await mainWindow.loadURL(appURL + `?view=splash`)
-  mainWindow.show()
-  await checkForUpdates()
-  mainWindow.destroy()
-}
-
-async function createWindow() {
-  mainWindow = new BrowserWindow(windowPreferences)
-  await mainWindow.loadURL(appURL)
-  mainWindow.show()
-  if (isDev) mainWindow.webContents.openDevTools()
-  starting = false
-}
-
-app.on(`window-all-closed`, onWindowAllClosed)
-app.on(`ready`, onReady)
-
-ipcMain.on(`app-info`, (evt) => {
-  evt.sender.send(`app-info`, new AppInfo(isDev, app.getVersion()))
+process.on(`uncaughtException`, error => {
+  logger.fatal(error)
 })
+
+process.on(`unhandledRejection`, error => {
+  logger.error(error)
+})
+
+process.on(`exit`, () => {
+  stopLogger()
+})
+
+app.disableHardwareAcceleration()
+
+const handlers = {
+  'appVersion': app.getVersion
+}
+
+for (const [key, handler] of Object.entries(handlers)) {
+  ipc.handle(key, handler)
+}
+
+const run = async () => {
+  logger.info(`Waiting for ready state...`)
+  await app.whenReady()
+
+  await checkForUpdates()
+
+  const _window = new BrowserWindow({
+    width: 960,
+    minWidth: 960,
+    height: 600,
+    minHeight: 600,
+    frame: false,
+    webPreferences: {
+      contextIsolation: false,
+      enableRemoteModule: true,
+      nodeIntegration: true,
+      webSecurity: false
+    }
+  })
+
+  await _window.loadURL(appUrl)
+  await _window.show()
+
+  logger.info(`App is ready.`)
+}
+
+run()
