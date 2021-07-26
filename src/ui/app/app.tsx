@@ -1,7 +1,7 @@
-import React from 'react';
+import React from 'react'
 
-import './app.scss';
-import logo from '../../assets/logo.svg';
+import './app.scss'
+import logo from '../../assets/logo.svg'
 
 const App: React.FC = () => {
   return (
@@ -21,7 +21,7 @@ const App: React.FC = () => {
         </a>
       </header>
     </div>
-  );
+  )
 }
 
-export default App;
+export default App

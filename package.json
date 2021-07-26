@@ -13,6 +13,7 @@
   "scripts": {
     "dev": "concurrently \"yarn react:dev\" \"wait-on http://localhost:3000 && yarn electron:dev\" -k",
     "build": "yarn electron:package --dir -c.compression=store -c.mac.identity=null",
+    "format": "eslint --fix \"src/**/*.ts\" \"src/**/*.tsx\"",
     "deploy": "yarn electron:publish",
     "package": "yarn electron:package",
     "react:dev": "cross-env BROWSER=none PORT=3000 rescripts start",
@@ -60,6 +61,7 @@
   "dependencies": {
     "electron-is-dev": "^2.0.0",
     "electron-updater": "^4.3.9",
+    "eslint-plugin-react-hooks": "^4.2.0",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "sass": "^1.32.12"

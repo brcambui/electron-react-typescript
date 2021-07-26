@@ -1,0 +1,30 @@
+{
+  "extends": [
+    "react-app"
+  ],
+  "plugins": [
+    "react-hooks"
+  ],
+  "rules": {
+    "indent": [
+      "error",
+      2,
+      {
+        "SwitchCase": 1
+      }
+    ],
+    "jsx-quotes": [
+      "error",
+      "prefer-double"
+    ],
+    "quotes": [
+      "error",
+      "backtick"
+    ],
+    "react-hooks/exhaustive-deps": 0,
+    "semi": [
+      "error",
+      "never"
+    ]
+  }
+}
