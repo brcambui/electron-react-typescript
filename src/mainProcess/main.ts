@@ -3,8 +3,7 @@ import path from 'path'
 import url from 'url'
 import isDev from 'electron-is-dev'
 
-import { checkForUpdates } from './app-update'
-import AppInfo from '../models/app-info'
+import { checkForUpdates } from './appUpdate'
 
 let mainWindow: BrowserWindow | null = null
 

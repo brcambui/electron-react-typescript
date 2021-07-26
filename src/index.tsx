@@ -2,8 +2,9 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 
 import './index.scss'
-import App from './ui/app'
-import Splash from './ui/splash'
+
+import { App } from './ui/app'
+import { Splash } from './ui/splash'
 
 /**
  * Defines which view will be rendered in the root node.
@@ -12,20 +13,19 @@ import Splash from './ui/splash'
  */
 const whichView = new URLSearchParams(window.location.search).get(`view`)
 
-/** Component to be rendered into the root node. */
-let component: React.ReactElement = (<></>)
+let view: React.ReactElement = (<></>)
 
 switch (whichView) {
 
   case `splash`:
-    component = <Splash />
+    view = <Splash />
     break
 
   default:
-  case `main`:
-    component = <App />
+  case `app`:
+    view = <App />
     break
 
 }
 
-ReactDOM.render(component, document.getElementById(`root`))
+ReactDOM.render(view, document.getElementById(`root`))

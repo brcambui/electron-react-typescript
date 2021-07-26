@@ -3,13 +3,13 @@ import React from 'react'
 import './app.scss'
 import logo from '../../assets/logo.svg'
 
-const App: React.FC = () => {
+export const App: React.FC = () => {
   return (
     <div className="App">
       <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
         <p>
-          Edit <code>src/App.tsx</code> and save to reload.
+          Edit <code>src/ui/app.tsx</code> and save to reload.
         </p>
         <a
           className="App-link"
@@ -23,5 +23,3 @@ const App: React.FC = () => {
     </div>
   )
 }
-
-export default App
