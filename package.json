@@ -1,5 +1,5 @@
 {
-  "version": "0.2.1",
+  "version": "1.0.0",
   "license": "MIT",
   "name": "electron-react-typescript",
   "productName": "Electron React Typescript",
@@ -8,19 +8,19 @@
     "email": "brendon@cambui.dev",
     "url": "https://cambui.dev/"
   },
-  "main": "build/electron/main-process/main.js",
+  "main": "build/electron/mainProcess/main.js",
   "homepage": "./",
   "scripts": {
-    "dev": "concurrently \"yarn react:dev\" \"wait-on http://localhost:3000 && yarn electron:dev\" -k",
+    "dev": "concurrently \"yarn react:dev\" \"wait-on http://localhost:4000 && yarn electron:dev\" -k",
     "build": "yarn electron:package --dir -c.compression=store -c.mac.identity=null",
     "format": "eslint --fix \"src/**/*.ts\" \"src/**/*.tsx\"",
     "deploy": "yarn electron:publish",
     "package": "yarn electron:package",
-    "react:dev": "cross-env BROWSER=none PORT=3000 rescripts start",
+    "react:dev": "cross-env BROWSER=none PORT=4000 rescripts start",
     "react:build": "rescripts build",
     "electron:dev": "rimraf build/electron/* && yarn electron:watch",
-    "electron:watch": "tsc-watch src/main-process/main.ts --outDir build/electron/ --esModuleInterop --onSuccess \"electron .\"",
-    "electron:compile": "tsc src/main-process/main.ts --outDir build/electron/ --esModuleInterop",
+    "electron:watch": "tsc-watch -p tsconfig.electron.json --onSuccess \"electron .\"",
+    "electron:compile": "tsc -p tsconfig.electron.json",
     "electron:package": "yarn react:build && yarn electron:compile && electron-builder -p never",
     "electron:publish": "yarn react:build && yarn electron:compile && electron-builder -p always"
   },
@@ -62,6 +62,8 @@
     "electron-is-dev": "^2.0.0",
     "electron-updater": "^4.3.9",
     "eslint-plugin-react-hooks": "^4.2.0",
+    "filesize": "^7.0.0",
+    "log4js": "^6.3.0",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "sass": "^1.32.12"

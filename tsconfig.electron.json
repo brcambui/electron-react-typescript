@@ -1,0 +1,11 @@
+{
+  "files": [
+    "src/mainProcess/main.ts"
+  ],
+  "compilerOptions": {
+    "outDir": "build/electron/",
+    "esModuleInterop": true,
+    "downlevelIteration": true,
+    "resolveJsonModule": true
+  }
+}
