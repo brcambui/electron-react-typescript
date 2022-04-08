@@ -9,7 +9,6 @@ export const App: React.FC = () => {
   const [date, setDate] = useState(getDate())
 
   useEffect(() => {
-    debugger
     setTimeout(() => setDate(getDate()), 1000)
   }, [date, setDate])
 
