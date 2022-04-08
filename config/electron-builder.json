@@ -1,0 +1,9 @@
+{
+  "extends": null,
+  "appId": "dev.cambui.desktop",
+  "productName": "Electron React Typescript",
+  "copyright": "Copyright © 2020-2022 {author}",
+  "files": [
+    "build/**/*"
+  ]
+}

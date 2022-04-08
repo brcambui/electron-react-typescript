@@ -19,10 +19,10 @@ yarn dev
 
 ## Building
 
-Run the `package` script in order to generate the production build to the current OS: 
+Run the `build` script in order to generate the production build to the current OS: 
 
 ```bash
-yarn package
+yarn build
 ```
 
 ## License

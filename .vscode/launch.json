@@ -1,0 +1,22 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Debug main process",
+      "type": "node",
+      "request": "launch",
+      "port": 5858,
+      "sourceMaps": true,
+      "runtimeExecutable": "yarn",
+      "runtimeArgs": [
+        "dev"
+      ],
+      "outFiles": [
+        "${workspaceFolder}/build/main/**/*.js"
+      ],
+      "skipFiles": [
+        "<node_internals>/**"
+      ],
+    }
+  ]
+}

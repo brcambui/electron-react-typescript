@@ -1,91 +1,55 @@
 {
-  "version": "1.0.0",
-  "license": "MIT",
   "name": "electron-react-typescript",
-  "productName": "Electron React Typescript",
+  "version": "1.0.0",
+  "description": "Electron+React+Typescript minimal starter",
   "author": {
     "name": "Brendon Cambuí",
-    "email": "brendon@cambui.dev",
-    "url": "https://cambui.dev/"
+    "url": "https://github.com/brcambui",
+    "email": "brendon@cambui.dev"
   },
-  "main": "build/electron/mainProcess/main.js",
-  "homepage": "./",
+  "license": "MIT",
+  "main": "./build/main/main.js",
   "scripts": {
-    "dev": "concurrently \"yarn react:dev\" \"wait-on http://localhost:4000 && yarn electron:dev\" -k",
-    "build": "yarn electron:package --dir -c.compression=store -c.mac.identity=null",
-    "format": "eslint --fix \"src/**/*.ts\" \"src/**/*.tsx\"",
-    "deploy": "yarn electron:publish",
-    "package": "yarn electron:package",
-    "react:dev": "cross-env BROWSER=none PORT=4000 rescripts start",
-    "react:build": "rescripts build",
-    "electron:dev": "rimraf build/electron/* && yarn electron:watch",
-    "electron:watch": "tsc-watch -p tsconfig.electron.json --onSuccess \"electron .\"",
-    "electron:compile": "tsc -p tsconfig.electron.json",
-    "electron:package": "yarn react:build && yarn electron:compile && electron-builder -p never",
-    "electron:publish": "yarn react:build && yarn electron:compile && electron-builder -p always"
-  },
-  "eslintConfig": {
-    "extends": "react-app"
-  },
-  "browserslist": {
-    "production": [
-      ">0.2%",
-      "not dead",
-      "not op_mini all"
-    ],
-    "development": [
-      "last 1 chrome version",
-      "last 1 firefox version",
-      "last 1 safari version"
-    ]
-  },
-  "build": {
-    "extends": null,
-    "appId": "dev.cambui.electron-react-typescript",
-    "productName": "Electron React Typescript",
-    "copyright": "Copyright © 2019-2021 ${author}",
-    "files": [
-      "build/**/*"
-    ],
-    "extraResources": [
-      {
-        "from": "bin",
-        "to": "bin"
-      },
-      {
-        "from": "public/icon.png",
-        "to": "icon.png"
-      }
-    ]
+    "build": "yarn main:build && yarn renderer:build && yarn electron:build",
+    "dev": "concurrently \"yarn renderer:dev\" \"wait-on http://localhost:3000/ && yarn main:dev\"",
+    "main:build": "webpack --config config/main/webpack.prod.js",
+    "main:dev": "webpack --config config/main/webpack.dev.js",
+    "renderer:build": "webpack --config config/renderer/webpack.prod.js",
+    "renderer:dev": "webpack serve --config config/renderer/webpack.dev.js",
+    "electron:build": "electron-builder -p never --config config/electron-builder.json"
   },
   "dependencies": {
     "electron-is-dev": "^2.0.0",
-    "electron-updater": "^4.3.9",
-    "eslint-plugin-react-hooks": "^4.2.0",
-    "filesize": "^7.0.0",
-    "log4js": "^6.3.0",
-    "react": "^17.0.2",
-    "react-dom": "^17.0.2",
-    "sass": "^1.32.12"
+    "react": "^18.0.0",
+    "react-dom": "^18.0.0"
   },
   "devDependencies": {
-    "@rescripts/cli": "0.0.15",
-    "@rescripts/rescript-env": "0.0.12",
-    "@types/node": "^14.14.20",
-    "@types/react": "17.0.0",
-    "@types/react-dom": "17.0.0",
-    "concurrently": "^6.2.0",
-    "cross-env": "^7.0.3",
-    "electron": "^13.0.1",
-    "electron-builder": "^22.10.5",
-    "react-scripts": "^4.0.3",
-    "rimraf": "^3.0.2",
-    "tsc-watch": "^4.4.0",
-    "typescript": "^4.1.3",
-    "wait-on": "^5.3.0"
-  },
-  "resolutions": {
-    "@types/react": "17.0.0",
-    "@types/react-dom": "17.0.0"
+    "@babel/core": "^7.17.9",
+    "@babel/node": "^7.16.8",
+    "@babel/plugin-proposal-class-properties": "^7.16.7",
+    "@babel/preset-env": "^7.16.11",
+    "@babel/preset-react": "^7.16.7",
+    "@babel/preset-typescript": "^7.16.7",
+    "@types/react": "^18.0.0",
+    "@types/react-dom": "^18.0.0",
+    "babel-loader": "^8.2.4",
+    "concurrently": "^7.1.0",
+    "css-loader": "^6.7.1",
+    "electron": "^18.0.3",
+    "electron-builder": "^22.14.13",
+    "file-loader": "^6.2.0",
+    "html-webpack-plugin": "^5.5.0",
+    "image-webpack-loader": "^8.1.0",
+    "nodemon": "^2.0.15",
+    "nodemon-webpack-plugin": "^4.7.1",
+    "sass": "^1.50.0",
+    "sass-loader": "^12.6.0",
+    "style-loader": "^3.3.1",
+    "ts-loader": "^9.2.8",
+    "typescript": "^4.6.3",
+    "wait-on": "^6.0.1",
+    "webpack": "^5.72.0",
+    "webpack-cli": "^4.9.2",
+    "webpack-dev-server": "^4.8.1"
   }
 }

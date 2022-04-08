@@ -1,0 +1,27 @@
+@keyframes rotate {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.app {
+  padding: 3rem 10rem;
+  width: 100vw;
+  height: 100vh;
+  color: white;
+  background-color: #303846;
+  text-align: center;
+
+  img {
+    width: 8rem;
+    animation: rotate 5s linear infinite;
+  }
+
+  h1 {
+    margin: 0;
+  }
+}
