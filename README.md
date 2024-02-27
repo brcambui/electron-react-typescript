@@ -18,7 +18,8 @@ cd your-project-name
 
 Use Yarn PnP to install all dependencies:
 
-> #### ⚠️ Install only with Yarn PnP 
+> ****⚠️ Install only with Yarn PnP****
+>
 > This project does not support the classic Yarn (v1.x). This was necessary in order to be able to install native modules. Here are the [instructions to install Yarn PnP](https://yarnpkg.com/getting-started/install).
 
 ```bash
@@ -64,7 +65,7 @@ const date = getDate()
 ### Electron helpers
 We also added some helpers inside the `electron/helpers/` folder. This directory contains some useful methods:
 
-> #### Do not modify these files. They are also used during the build process in both dev and production environments. If you need to add some functionality, please do it in the `src/` folder.
+> ****Do not modify these files. They are also used during the build process in both dev and production environments. If you need to add some functionality, please do it in the `src/` folder.****
 
 #### `@/electron/appUrl`
 Contains the app url that you should use while creating a new [BrowserWindow](https://www.electronjs.org/docs/latest/api/browser-window).
