@@ -1,26 +1,14 @@
 import { app, BrowserWindow } from "electron"
-import isDev from "electron-is-dev"
-import path from "path"
-import url from "url"
 
-const productionUrl = path.resolve(__dirname, "../renderer/index.html")
-
-const appUrl = isDev
-  ? "http://localhost:3000"
-  : url.format({
-    pathname: productionUrl,
-    protocol: "file:",
-    slashes: true
-  })
+import appUrl from "../../electron/helpers/appUrl"
+import paths from "@/electron/paths"
 
 async function run() {
   const mainWindow = new BrowserWindow({
     width: 800,
     height: 600,
-    autoHideMenuBar: true,
     webPreferences: {
-      contextIsolation: false,
-      nodeIntegration: true
+      preload: paths.preload
     }
   })
   await mainWindow.loadURL(appUrl)

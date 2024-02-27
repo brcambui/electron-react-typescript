@@ -1,0 +1,33 @@
+{
+  "compilerOptions": {
+    "target": "es2022",
+    "module": "commonjs",
+    "lib": [
+      "dom",
+      "es2022"
+    ],
+    "moduleResolution": "node",
+    "jsx": "react-jsx",
+    "strict": true,
+    "sourceMap": true,
+    "declaration": false,
+    "esModuleInterop": true,
+    "resolveJsonModule": true,
+    "paths": {
+      "@/electron/*": [
+        "./electron/helpers/*"
+      ],
+      "@/resources/*": [
+        "./resources/*"
+      ],
+      "@/*": [
+        "./src/*"
+      ]
+    }
+  },
+  "include": [
+    "electron/helpers",
+    "./resources",
+    "./src"
+  ]
+}
