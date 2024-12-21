@@ -18,7 +18,7 @@
     "build:renderer": "cross-env NODE_ENV=production webpack --config ./electron/webpack/renderer.prod.ts",
     "build:electron": "electron-builder build --publish never --config ./electron/electron-builder.json"
   },
-  "packageManager": "yarn@4.1.0",
+  "packageManager": "yarn@4.5.3",
   "dependencies": {
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
