@@ -1,10 +1,11 @@
 # Electron + React + Typescript
-A scalable project structure to get started developing with Electron. It uses [Webpack](https://webpack.js.org/) to provide development and production-ready environments.
+A scalable project structure to get started developing with Electron. It uses [esbuild](https://esbuild.github.io/) for the main process and [Rsbuild](https://rsbuild.dev/) for the renderer process to provide fast development and production-ready environments.
 
 This template comes with:
 - Auto-reload in both main and renderer processes.
 - Sass support, including `.sass`, `.scss`, `.module.scss` files.
 - Support for [native modules](https://www.electronjs.org/docs/latest/tutorial/using-native-node-modules) like [`sqlite3`](https://github.com/TryGhost/node-sqlite3).
+- Automatic loading of `.env.development`, and `.env.production` files.
 
 ## Get started
 Make sure you have [Node.js](https://nodejs.org/) and [Yarn PnP](https://yarnpkg.com/getting-started/install) installed.
@@ -81,28 +82,23 @@ const win = new BrowserWindow({
 await win.loadUrl(appUrl)
 ```
 
-#### `@/electron/paths`
-A list of paths that are used during the build process and can also be accessed in the main process.
+#### `@/electron/preloadPath`
+Contains the preload script path that you should use while creating a new [BrowserWindow](https://www.electronjs.org/docs/latest/api/browser-window).
 ```ts
 import { BrowserWindow } from "electron"
-import paths from "@/electron/paths"
+import appUrl from "@/electron/appUrl"
+import preloadPath from "@/electron/preloadPath"
 
 const win = new BrowserWindow({ 
   width: 800,
   height: 600,
   webPreferences: {
-    preload: paths.preload // <= here
+    preload: preloadPath
   }
 })
+
+await win.loadUrl(appUrl)
 ```
-
-#### `@/electron/port`
-Contains the port used by the [webpack-dev-server](https://webpack.js.org/configuration/dev-server/). Here are some considerations about the port:
-  - The default port is 3000
-  - You can set the environment variable PORT to change the port used by the webpack-dev-server.
-
-#### `@/electron/resourcesPath`
-Contains the resources path. See more in the [acessing resource files](#acessing-resource-files-programatically) section.
 
 ## Building
 You can generate a production build for the current OS by running the `build` command:
@@ -116,7 +112,7 @@ This command will generate a `dist/` folder which the following artifacts:
 - Unpacked version
 
 ### Changing the configuration
-This project uses [electron-builder](https://www.electron.build/). The configuration file for the electron-builder is located at `electron/electron-builder.json`. You can access the [electron-builder documentation](https://www.electron.build/configuration/configuration) to see all the available settings.
+This project uses [electron-builder](https://www.electron.build/). The configuration file for the electron-builder is located at `electron/build.json`. You can access the [electron-builder documentation](https://www.electron.build/configuration/configuration) to see all the available settings.
 
 
 ### Adding resources
@@ -129,23 +125,36 @@ The following file types are supported on the renderer process by default:
 | Image | `.png`, `.jpg`, `.jpeg`, `.gif`, `.svg`   |
 | Font  | `.woff`, `.woff2`, `.eot`, `.ttf`, `.otf` |
 
-You can add more file extensions or change the file loader configuration by editing the `electron/webpack/renderer.[dev|prod].ts` files.
+You can add more file extensions or change the file loader configuration by editing the `electron/rsbuild.ts` file.
+
+### Environment variables
+This project automatically loads environment variables from `.env` files:
+- `.env` - Loaded in all environments
+- `.env.development` - Loaded only in development mode
+- `.env.production` - Loaded only in production builds
+
+Create a `.env` file in the root of your project to add environment variables:
+```bash
+# .env
+MY_API_KEY=your-api-key-here
+DATABASE_URL=sqlite://./database.db
+```
+
+Access environment variables in your code using `process.env`:
+```ts
+const apiKey = process.env.MY_API_KEY
+const databaseUrl = process.env.DATABASE_URL
+```
+
+> **Note**: Environment variables are loaded at build time. You'll need to restart the development server or rebuild your application after changing `.env` files.
 
 ### Changing the icon
-You can change the app icon by modifying the files inside `resources/icons/`.
+You can change the app icon by modifying the files inside `resources/`:
+- `app.ico` for Windows
+- `app.icns` for macOS  
+- `icon.png` for Linux
 
 There are several guidelines for displaying an icon depending on the OS you are building the application on. We recommend that you follow the [electron-builder documentation](https://www.electron.build/icons.html) to generate new icons.
-
-### Acessing resource files programatically
-You can access a file inside the resources directory using the following code:
-```ts
-import path from "path"
-import fs from "fs"
-import resourcesPath from "@/electron/resourcesPath"
-
-const fileLocation = path.join(resourcesPath, "file.txt")
-const content = fs.readFileSync(fileLocation).toString()
-```
 
 ## Native modules
 If your application uses [native modules](https://www.electronjs.org/docs/latest/tutorial/using-native-node-modules), Electron needs to rebuild them so you can access the native bindings in the main process.
@@ -174,7 +183,7 @@ This is probably because some of your native modules are using an older version 
 ## Roadmap
 - [x] Sass support
 - [x] Native module support
-- [ ] Load automatically `.env`, `.env.development`, `.env.production` files
+- [x] Load automatically `.env.development`, `.env.production` files
 - [ ] Provide a deploy command
 - [ ] Provide auto-updater examples for AWS S3 and GitHub
 
