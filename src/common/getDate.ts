@@ -1,4 +1,2 @@
-export function getDate() {
-  const now = new Date()
-  return now.toLocaleString()
-}
+const getDate = () => new Date().toISOString();
+export default getDate;

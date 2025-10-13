@@ -1,4 +1,4 @@
-import { getDate } from "./common/getDate"
+import type getDate from "./common/getDate";
 
 declare global {
   interface Window {

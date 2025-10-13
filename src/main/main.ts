@@ -1,18 +1,19 @@
-import { app, BrowserWindow } from "electron"
+import { app, BrowserWindow } from "electron";
 
-import appUrl from "../../electron/helpers/appUrl"
-import paths from "@/electron/paths"
+import appUrl from "@/electron/appUrl";
+import preloadPath from "@/electron/preloadPath";
 
-async function run() {
+const run = async () => {
   const mainWindow = new BrowserWindow({
     width: 800,
     height: 600,
     webPreferences: {
-      preload: paths.preload
+      preload: preloadPath
     }
-  })
-  await mainWindow.loadURL(appUrl)
-  mainWindow.show()
+  });
+  await mainWindow.loadURL(appUrl);
+  mainWindow.show();
+  console.log("Main window loaded");
 }
 
-app.whenReady().then(run)
+app.whenReady().then(run);

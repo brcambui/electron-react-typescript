@@ -1,40 +1,61 @@
-import { execSync } from "child_process"
-import fs from "fs"
+import fs from "fs";
+import { build as electronBuild, Platform } from "electron-builder";
 
-import paths from "../helpers/paths"
+import esbuild from "../esbuild";
+import rsbuild from "../rsbuild";
 
-function run() {
-  buildRenderer()
-  buildMain()
-  clearDistFolder()
-  buildElectron()
-}
+const buildMain = async () => {
+  await esbuild({
+    entryPoints: ["src/main/main.ts"],
+    outdir: "build/main",
+    envFilePath: ".env.production"
+  });
+};
 
-function buildRenderer() {
-  execSync("npm run build:renderer", {
-    stdio: "inherit"
-  })
-}
+const buildPreload = async () => {
+  await esbuild({
+    entryPoints: { preload: "src/main/preload.ts" },
+    outdir: "build/main",
+    envFilePath: ".env.production"
+  });
+};
 
-function buildMain() {
-  execSync("npm run build:main", {
-    stdio: "inherit"
-  })
-}
+const buildRenderer = async () => {
+  await rsbuild({
+    output: {
+      target: "web",
+      assetPrefix: "auto",
+      distPath: {
+        root: "./build/renderer",
+      }
+    }
+  });
+};
 
-function clearDistFolder() {
-  const distExists = fs.existsSync(paths.dist)
-  if (!distExists) return
-  fs.rmSync(paths.dist, {
-    force: true,
-    recursive: true
-  })
-}
+const pack = async () => {
+  const config = JSON.parse(fs.readFileSync("electron/build.json", "utf-8"));
+  const getCurrentPlatform = () => {
+    switch (process.platform) {
+      case "win32": return Platform.WINDOWS;
+      case "darwin": return Platform.MAC;
+      case "linux": return Platform.LINUX;
+      default: throw new Error("Unsupported platform: " + process.platform);
+    }
+  };
+  const currentPlatform = getCurrentPlatform();
+  console.log(`Building for platform: ${currentPlatform.name}`);
+  await electronBuild({
+    config,
+    targets: currentPlatform.createTarget(),
+  });
+};
 
-function buildElectron() {
-  execSync("npm run build:electron", {
-    stdio: "inherit"
-  })
-}
+const run = async () => {
+  fs.rmSync("build", { recursive: true, force: true });
+  await buildMain();
+  await buildPreload();
+  await buildRenderer();
+  await pack();
+};
 
-run()
+run();

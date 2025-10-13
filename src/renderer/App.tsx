@@ -1,17 +1,17 @@
-import React, { useEffect, useState } from "react"
-import { getDate } from "../common/getDate"
+import React, { useEffect, useState } from "react";
 
-import styles from "./App.module.scss"
-import icon from "@/resources/icons/icon.png"
+import styles from "./App.module.scss";
+import icon from "./icon.png";
+import getDate from "@/common/getDate";
 
-export const App: React.FC = () => {
-  const [commonDate, setCommonDate] = useState(getDate())
-  const [preloadDate, setPreloadDate] = useState(window.getDate())
+const App: React.FC = () => {
+  const [commonDate, setCommonDate] = useState(getDate());
+  const [preloadDate, setPreloadDate] = useState(window.getDate());
 
   useEffect(() => {
-    setTimeout(() => setCommonDate(getDate()), 1000)
-    setTimeout(() => setPreloadDate(window.getDate()), 1000)
-  }, [commonDate, setCommonDate])
+    setTimeout(() => setCommonDate(getDate()), 1000);
+    setTimeout(() => setPreloadDate(window.getDate()), 1000);
+  }, [commonDate, setCommonDate]);
 
   return (
     <div className={styles.app}>
@@ -25,5 +25,7 @@ export const App: React.FC = () => {
       <pre>From /@/common/getDate.ts: {commonDate}</pre>
       <pre>From preload.js: {preloadDate}</pre>
     </div>
-  )
-}
+  );
+};
+
+export default App;

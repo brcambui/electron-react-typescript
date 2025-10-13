@@ -1,6 +1,6 @@
 {
-  "productName": "Electron React Typescript",
-  "appId": "dev.cambui.desktop",
+  "productName": "ElectronReactTypescript",
+  "appId": "dev.cambui.electron-react-typescript",
   "asar": true,
   "asarUnpack": "**\\*.{node,dll}",
   "files": [
@@ -12,12 +12,12 @@
     "./resources/**"
   ],
   "win": {
-    "icon": "resources/icons/win/icon.ico"
+    "icon": "resources/app.ico"
   },
   "mac": {
-    "icon": "resources/icons/mac/icon.icns"
+    "icon": "resources/app.icns"
   },
   "linux": {
-    "icon": "resources/icons/png/32x32.png"
+    "icon": "resources/icon.png"
   }
 }

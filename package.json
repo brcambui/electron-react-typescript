@@ -1,6 +1,6 @@
 {
   "name": "electron-react-typescript",
-  "version": "2.0.0",
+  "version": "3.0.0",
   "description": "Electron + React + Typescript starter",
   "author": {
     "name": "Brendon Cambuí",
@@ -10,42 +10,26 @@
   "license": "MIT",
   "main": "./build/main/main.js",
   "scripts": {
-    "dev": "ts-node ./electron/scripts/dev.ts",
-    "dev:main": "cross-env NODE_ENV=development webpack --config ./electron/webpack/main.dev.ts",
-    "dev:renderer": "cross-env NODE_ENV=development webpack serve --config ./electron/webpack/renderer.dev.ts",
-    "build": "ts-node ./electron/scripts/build.ts",
-    "build:main": "cross-env NODE_ENV=production webpack --config ./electron/webpack/main.prod.ts",
-    "build:renderer": "cross-env NODE_ENV=production webpack --config ./electron/webpack/renderer.prod.ts",
-    "build:electron": "electron-builder build --publish never --config ./electron/electron-builder.json"
+    "dev": "tsx --watch ./electron/scripts/dev.ts",
+    "build": "tsx ./electron/scripts/build.ts"
   },
-  "packageManager": "yarn@4.5.3",
+  "packageManager": "yarn@4.9.1",
   "dependencies": {
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0"
+    "react": "^19.2.0",
+    "react-dom": "^19.2.0"
   },
   "devDependencies": {
-    "@types/node": "^20.11.20",
-    "@types/react": "^18.2.58",
-    "@types/react-dom": "^18.2.19",
-    "@types/wait-on": "^5.3.4",
-    "cross-env": "^7.0.3",
-    "css-loader": "^6.10.0",
-    "electron": "33.2.1",
-    "electron-builder": "^24.12.0",
-    "electron-rebuild": "^3.2.9",
-    "html-webpack-plugin": "^5.6.0",
-    "nodemon-webpack-plugin": "^4.8.2",
-    "sass": "^1.71.1",
-    "sass-loader": "^14.1.1",
-    "style-loader": "^3.3.4",
-    "ts-loader": "^9.5.1",
-    "ts-node": "^10.9.2",
-    "tsconfig-paths-webpack-plugin": "^4.1.0",
-    "typescript": "^5.3.3",
-    "wait-on": "^7.2.0",
-    "webpack": "^5.90.3",
-    "webpack-cli": "^5.1.4",
-    "webpack-dev-server": "^5.0.2",
-    "webpack-merge": "^5.10.0"
+    "@rsbuild/core": "^1.5.16",
+    "@rsbuild/plugin-react": "^1.4.1",
+    "@rsbuild/plugin-sass": "^1.4.0",
+    "@types/node": "^24.7.1",
+    "@types/react": "^19.2.2",
+    "@types/react-dom": "^19.2.1",
+    "chokidar": "^4.0.3",
+    "dotenv": "^17.2.3",
+    "electron": "^38.2.2",
+    "electron-builder": "26.0.12",
+    "esbuild": "^0.25.10",
+    "tsx": "^4.20.6"
   }
 }
